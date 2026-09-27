@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cancer Trials Greece</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #12355b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            background: white;
+        }
+
+        button {
+            padding: 12px 22px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #125ca3;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+
+        .summary {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .trial {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+        }
+
+        .trial h2 {
+            margin-top: 0;
+            color: #12355b;
+        }
+
+        .trial-info {
+            line-height: 1.7;
+        }
+
+        .location {
+            background: #f1f5f9;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 6px;
+        }
+
+        .clinicaltrials-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .clinicaltrials-link:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            font-size: 18px;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #a40000;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 800px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Cancer Trials Greece</h1>
+    <p>Clinical trials available in Greece</p>
+</header>
+
+<div class="container">
+
+    <div class="filters">
+
+        <div class="filter-row">
+
+            <!-- Cancer -->
+            <div>
+                <label for="cancer">Cancer Site</label>
+
+                <select id="cancer" onchange="loadHospitals()">
+
+                    <option value="cancer">
+                        All Cancer Sites
+                    </option>
+
+                    <option value="Breast Cancer">
+                        Breast
+                    </option>
+
+                    <option value="Lung Cancer">
+                        Lung
+                    </option>
+
+                    <option value="Colorectal Cancer">
+                        Colorectal
+                    </option>
+
+                    <option value="Gastric Cancer">
+                        Gastric
+                    </option>
+
+                    <option value="Esophageal Cancer">
+                        Esophageal
+                    </option>
+
+                    <option value="Pancreatic Cancer">
+                        Pancreatic
+                    </option>
+
+                    <option value="Liver Cancer">
+                        Liver
+                    </option>
+
+                    <option value="Prostate Cancer">
+                        Prostate
+                    </option>
+
+                    <option value="Ovarian Cancer">
+                        Ovarian
+                    </option>
+
+                    <option value="Endometrial Cancer">
+                        Endometrial
+                    </option>
+
+                    <option value="Kidney Cancer">
+                        Kidney
+                    </option>
+
+                    <option value="Bladder Cancer">
+                        Bladder
+                    </option>
+
+                    <option value="Melanoma">
+                        Melanoma
+                    </option>
+
+                    <option value="Head and Neck Cancer">
+                        Head & Neck
+                    </option>
+
+                    <option value="Brain Cancer">
+                        Brain
+                    </option>
+
+                    <option value="Leukemia">
+                        Leukemia
+                    </option>
+
+                    <option value="Lymphoma">
+                        Lymphoma
+                    </option>
+
+                    <option value="Multiple Myeloma">
+                        Multiple Myeloma
+                    </option>
+
+                    <option value="Sarcoma">
+                        Sarcoma
+                    </option>
+
+                </select>
+            </div>
+
+
+            <!-- City -->
+            <div>
+                <label for="city">City</label>
+
+                <select id="city" onchange="loadHospitals()">
+
+                    <option value="all">
+                        All Greek Cities
+                    </option>
+
+                    <option value="Athens">
+                        Athens
+                    </option>
+
+                    <option value="Thessaloniki">
+                        Thessaloniki
+                    </option>
+
+                    <option value="Patras">
+                        Patras
+                    </option>
+
+                    <option value="Heraklion">
+                        Heraklion
+                    </option>
+
+                    <option value="Larissa">
+                        Larissa
+                    </option>
+
+                    <option value="Ioannina">
+                        Ioannina
+                    </option>
+
+                    <option value="Alexandroupoli">
+                        Alexandroupoli
+                    </option>
+
+                </select>
+            </div>
+
+
+            <!-- Hospital -->
+            <div>
+                <label for="hospital">Hospital / Institution</label>
+
+                <select id="hospital">
+
+                    <option value="all">
+                        All Hospitals / Institutions
+                    </option>
+
+                </select>
+            </div>
+
+
+            <!-- Search -->
+            <div>
+                <button onclick="searchTrials()">
+                    Search
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="results"></div>
+
+</div>
+
+
+<script>
+
+async function loadHospitals() {
+
+    const cancer = document.getElementById("cancer").value;
+    const city = document.getElementById("city").value;
+
+    const hospitalSelect = document.getElementById("hospital");
+
+    hospitalSelect.innerHTML =
+        '<option value="all">Loading hospitals...</option>';
+
+    try {
+
+        const response = await fetch(
+            `/api/hospitals?cancer=${encodeURIComponent(cancer)}&city=${encodeURIComponent(city)}`
+        );
+
+        const data = await response.json();
+
+        hospitalSelect.innerHTML =
+            '<option value="all">All Hospitals / Institutions</option>';
+
+        if (data.hospitals && data.hospitals.length > 0) {
+
+            data.hospitals.forEach(function(hospital) {
+
+                const option = document.createElement("option");
+
+                option.value = hospital;
+                option.textContent = hospital;
+
+                hospitalSelect.appendChild(option);
+
+            });
+
+        }
+
+    } catch (error) {
+
+        hospitalSelect.innerHTML =
+            '<option value="all">Unable to load hospitals</option>';
+
+        console.error(error);
+
+    }
+}
+
+
+async function searchTrials() {
+
+    const cancer =
+        document.getElementById("cancer").value;
+
+    const city =
+        document.getElementById("city").value;
+
+    const hospital =
+        document.getElementById("hospital").value;
+
+    const results =
+        document.getElementById("results");
+
+    results.innerHTML =
+        '<div class="loading">Searching ClinicalTrials.gov...</div>';
+
+    try {
+
+        const response = await fetch(
+            `/api/trials?cancer=${encodeURIComponent(cancer)}&city=${encodeURIComponent(city)}&hospital=${encodeURIComponent(hospital)}`
+        );
+
+        const data = await response.json();
+
+        if (data.error) {
+
+            results.innerHTML =
+                `<div class="error">${data.error}</div>`;
+
+            return;
+        }
+
+        if (!data.studies || data.studies.length === 0) {
+
+            results.innerHTML =
+                '<div class="trial">No matching clinical trials were found.</div>';
+
+            return;
+        }
+
+        let html = "";
+
+        html += `
+            <div class="summary">
+                ${data.count} clinical trial(s) found
+            </div>
+        `;
+
+
+        data.studies.forEach(function(trial) {
+
+            html += `
+                <div class="trial">
+
+                    <h2>${trial.title}</h2>
+
+                    <div class="trial-info">
+
+                        <strong>NCT Number:</strong>
+                        ${trial.nct}
+                        <br>
+
+                        <strong>Status:</strong>
+                        ${trial.status || "Not reported"}
+                        <br>
+
+                        <strong>Phase:</strong>
+                        ${trial.phase || "Not reported"}
+                        <br>
+
+                        <strong>Sponsor:</strong>
+                        ${trial.sponsor || "Not reported"}
+
+                    </div>
+
+                    <h3>Greek Location(s)</h3>
+            `;
+
+
+            trial.locations.forEach(function(location) {
+
+                html += `
+                    <div class="location">
+
+                        <strong>
+                            ${location.facility || "Institution not reported"}
+                        </strong>
+
+                        <br>
+
+                        ${location.city || ""}
+                        ${location.state ? ", " + location.state : ""}
+                        ${location.zip ? " " + location.zip : ""}
+
+                    </div>
+                `;
+
+            });
+
+
+            html += `
+                    <a
+                        class="clinicaltrials-link"
+                        href="${trial.url}"
+                        target="_blank"
+                    >
+                        View trial on ClinicalTrials.gov →
+                    </a>
+
+                </div>
+            `;
+
+        });
+
+
+        results.innerHTML = html;
+
+    } catch (error) {
+
+        results.innerHTML = `
+            <div class="error">
+                Error connecting to the clinical trials database.
+                <br><br>
+                ${error}
+            </div>
+        `;
+
+        console.error(error);
+
+    }
+}
+
+
+// Load hospitals when page opens
+window.addEventListener("DOMContentLoaded", function() {
+    loadHospitals();
+});
+
+</script>
+
+</body>
+</html>
